@@ -1,1 +1,1 @@
-# study-article
+# studyAndArticle
