@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Javascript高级程序设计代码</title>
+</head>
+<body id='body1'>
+  <p id='p1'><span>222</span>1111</p>
+  <div id="div1"></div>
+  <div id="div2"></div>
+  <span id='span1'><span>1</span><span>2</span></span>
+  <script>
+    let p1 = document.querySelector('#p1')
+    let div1 = document.querySelector('#div1')
+    let span1 = document.querySelector('#span1')
+    let body1 = document.querySelector('#body1')
+    console.log(p1.nodeName);
+    console.log(p1,p1.childNodes,p1.childNodes.length,Array.prototype.slice.call(p1.childNodes,0));
+    console.log(p1.childNodes[0].nodeType,p1.childNodes[0].nodeName,p1.childNodes[0].nodeValue);
+    
+    console.dir(Node)
+    let returnNode = body1.replaceChild(span1,div1)
+    console.log(returnNode);
+    console.log(span1.normalize());
+    console.log(span1.childNodes);
+    console.dir(document)
+  </script>
+</body>
+</html>
