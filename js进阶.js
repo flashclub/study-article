@@ -20,11 +20,11 @@ var fn5 = function fn4() {
 // console.log(fn4);  //  报错 fn4 is not defined
 console.log(fn5()); //fn4内部 undefined
 
-// 箭头函数
+// 箭头函数   无法使用arguments
 var fn6 = i => console.log(i);
 
-console.log(fn6(1));
-console.log(fn6.name); //
+fn6(1);
+console.log('箭头函数',fn6.name); //
 
 /**
  * 抽象词法树：不执行 只看语法
@@ -35,8 +35,8 @@ console.log(fn6.name); //
  */
 
 // 柯里化之前：
-function sum(x,y) {
-  return x+y
+function sum(x, y) {
+  return x + y;
 }
 var template = "<h1>I'm {{name}}</h1>";
 
@@ -48,7 +48,7 @@ console.log(handlerBar("laughing"));
 // 柯里化：
 // 可以用做惰性求值
 function addOne(y) {
-  return sum(1 , y)
+  return sum(1, y);
 }
 function handleBar2(template) {
   return function(data) {
@@ -56,34 +56,71 @@ function handleBar2(template) {
   };
 }
 var t = handleBar2(`<h1>I'm {{name}}</h1>`);
-console.log(t({name:'jack'}));
+console.log(t({ name: "jack" }));
 
 /**
  * 高阶函数：如果接受一个或多个函数输入或者输出一个函数，或者两个条件都满足
  */
-var arr = []
+var arr = [];
 //  输入一个函数
-arr.sort(function () {})  //map filter reduce foreach
+arr.sort(function() {}); //map filter reduce foreach
 //  输出一个函数 bind
-
 
 /**
  * 回调，将函数作为参数
  */
-
 
 /**
  * 返回对象的函数就叫构造函数
  */
 
 /**
- * 箭头函数
+ * 箭头函数，使用call没法将call的第一个参数作为this
  */
 
-setTimeout(function () {
-  console.log(this);
-  setTimeout(() => {
-    console.log(this);
-    
-  }, 1000);
-}.bind({name:'laughing'}), 1000);
+// setTimeout(function () {
+//   console.log(this);
+//   setTimeout(() => {
+//     console.log(this);
+
+//   }, 1000);
+// }.bind({name:'laughing'}), 1000);
+
+var fn10 = () => {
+  console.log("fn10", this);
+  console.log(arguments);
+};
+
+// fn10()
+
+// 柯里化函数
+var abc = function(a, b, c) {
+  console.log("100 : ", a, b, c);
+  return [a, b, c];
+};
+function curry(fn) {
+  console.log(103);
+  var arr = [];
+  return function(data1) {
+    console.log("107 : ", arguments);
+    var arr = fn.apply(undefined, arguments);
+    return function(data2) {
+      arr.push(data2);
+      return arr;
+    };
+  };
+}
+
+var curried = curry(abc);
+// var arr = curried(1,2,3)
+// console.log('arr : ',arr);
+console.log("arr2 : ", curried(1, 2)(3));
+// 理想状态：
+// curried(1)(2)(3);
+// => [1, 2, 3]
+
+// curried(1, 2)(3);
+// => [1, 2, 3]
+
+// curried(1, 2, 3);
+// => [1, 2, 3]
