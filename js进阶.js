@@ -24,7 +24,7 @@ console.log(fn5()); //fn4内部 undefined
 var fn6 = i => console.log(i);
 
 fn6(1);
-console.log('箭头函数',fn6.name); //
+console.log("箭头函数", fn6.name); //
 
 /**
  * 抽象词法树：不执行 只看语法
@@ -95,26 +95,43 @@ var fn10 = () => {
 
 // 柯里化函数
 var abc = function(a, b, c) {
-  console.log("100 : ", a, b, c);
   return [a, b, c];
 };
 function curry(fn) {
-  console.log(103);
-  var arr = [];
-  return function(data1) {
-    console.log("107 : ", arguments);
-    var arr = fn.apply(undefined, arguments);
-    return function(data2) {
-      arr.push(data2);
+  return function(data1,data2) {
+    const lg = arguments.length;
+    var arr = [];
+    if (lg === 1) {
+      arr.push(data1);
+      return function(data2) {
+        arr.push(data2);
+        return function(data3) {
+          arr.push(data3);
+          var arr3 = fn.apply(undefined, arr);
+          return arr3;
+        };
+      };
+    } else if (lg === 2) {
+      var arr = [];
+      arr.push(data1,data2);
+      return function(data3) {
+        arr.push(data3);
+        var arr2 = fn.apply(undefined, arr);
+        return arr2;
+      };
+    } else if (lg === 3) {
+      arr = fn.apply(undefined, arguments);
       return arr;
-    };
+    }
   };
 }
 
 var curried = curry(abc);
 // var arr = curried(1,2,3)
 // console.log('arr : ',arr);
-console.log("arr2 : ", curried(1, 2)(3));
+console.log("arr1 : ", curried(122)(299)(300));
+console.log("arr2 : ", curried(1, 200)(3));
+console.log("arr3 : ", curried(100, 2, 3));
 // 理想状态：
 // curried(1)(2)(3);
 // => [1, 2, 3]
