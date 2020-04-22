@@ -33,3 +33,34 @@ windows在使用NODE_ENV=production时会报异常，因此需要使用cross-env
 - 起因：路径填写的是基于开发时的路径，在打包成一个文件后路径修改为基于html 文件的，这时需要使用url-loader，然而在css文件中引入img时，会因为url-loader的设置引起错误
 - 不想写了，这人写的挺好的看这个吧 https://juejin.im/post/5b8d1e926fb9a019b66e4657
 
+###  5.package设置script问题
+
+
+
+### 6.自定义插件
+
+插件中必须有apply方法，否则在使用插件时会报错：
+
+```bash
+Invalid configuration object. Webpack has been initialised using a configuration object that does not match the API schema.
+- configuration.plugins[0] misses the property 'apply'.
+function
+   -> The run point of the plugin, required method.
+```
+
+### 常见拼写错误
+
+例如`plugins`拼成`plugin`时：
+
+```bash
+-configuration has an unknown property 'plugin'
+```
+
+loader中
+
+`options`的`presets`拼成了`preset`：
+
+```bash
+Error: Unknown option: .preset. Check out ······
+```
+
